@@ -1,9 +1,9 @@
-defmodule Sling.SessionView
+defmodule Sling.SessionView do
   use Sling.Web, :view
 
   def render("show.json", %{user: user, jwt: jwt}) do
     %{
-      data: render_one(user, Slign.UserView, "user.json"),
+      data: render_one(user, Sling.UserView, "user.json"),
       meta: %{token: jwt}
     }
   end
@@ -12,7 +12,7 @@ defmodule Sling.SessionView
     %{error: "Invalid email or password"}
   end
 
-  def render("delete.json") do
+  def render("delete.json", _) do
     %{ok: true}
   end
 

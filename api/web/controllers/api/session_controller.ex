@@ -18,7 +18,7 @@ defmodule Sling.SessionController do
   end
 
   def delete(conn, _) do
-    jwt = Guardian.Plug.current_token(new_conn)
+    jwt = Guardian.Plug.current_token(conn)
     Guardian.revoke!(jwt)
 
     conn
@@ -28,7 +28,7 @@ defmodule Sling.SessionController do
 
   def refresh(conn, _params) do
     user = Guardian.Plug.current_resource(conn)
-    jwt = Guardian.Plug.current_token(new_conn)
+    jwt = Guardian.Plug.current_token(conn)
     {:ok, claims} = Guardian.Plug.claims(conn)
 
     case Guardian.refresh!(jwt, claims, %{ttl: {30, :days}}) do
