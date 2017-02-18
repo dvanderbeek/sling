@@ -1,7 +1,6 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
 import { logout } from '../../actions/session';
 import Navbar from '../../components/Navbar';
 
@@ -26,14 +25,10 @@ class Home extends Component {
     return (
       <div style={{ flex: '1' }}>
         <Navbar />
-        <ul>
-          <li><Link to="/login">Login</Link></li>
-          <li><Link to="/signup">Signup</Link></li>
-        </ul>
         {isAuthenticated &&
           <div>
-            <span>{currentUser.username}</span>
-            <button type="button" onClick={this.handleLogout}>Logout</button>
+            <p>{currentUser.username}</p>
+            <button type="button" className={'btn btn-default'} onClick={this.handleLogout}>Logout</button>
           </div>
         }
       </div>
