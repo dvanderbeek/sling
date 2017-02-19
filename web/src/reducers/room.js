@@ -2,6 +2,14 @@ const initialState = {
   channel: null,
   currentRoom: {},
   messages: [],
+  presentUsers: [],
+  loadingOlderMessages: false, // new line
+  pagination: { // new line
+    total_pages: 0,
+    total_entries: 0,
+    page_size: 0,
+    page_number: 0,
+  },
 };
 
 export default function (state = initialState, action) {
@@ -12,6 +20,7 @@ export default function (state = initialState, action) {
         channel: action.channel,
         currentRoom: action.response.room,
         messages: action.response.messages.reverse(),
+        pagination: action.response.pagination, // new line
       };
     case 'USER_LEFT_ROOM':
       return initialState;
@@ -22,6 +31,31 @@ export default function (state = initialState, action) {
           ...state.messages,
           action.message,
         ],
+      };
+    case 'ROOM_PRESENCE_UPDATE':
+      return {
+        ...state,
+        presentUsers: action.presentUsers,
+      };
+    case 'FETCH_MESSAGES_REQUEST': // new case
+      return {
+        ...state,
+        loadingOlderMessages: true,
+      };
+    case 'FETCH_MESSAGES_SUCCESS': // new case
+      return {
+        ...state,
+        messages: [
+          ...action.response.data.reverse(),
+          ...state.messages,
+        ],
+        pagination: action.response.pagination,
+        loadingOlderMessages: false,
+      };
+    case 'FETCH_MESSAGES_FAILURE': // new case
+      return {
+        ...state,
+        loadingOlderMessages: false,
       };
     default:
       return state;
