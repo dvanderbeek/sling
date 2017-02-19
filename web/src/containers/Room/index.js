@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { connectToChannel, leaveChannel, createMessage } from '../../actions/room';
+import moment from 'moment-timezone';
 import MessageList from '../../components/MessageList';
 import MessageForm from '../../components/MessageForm';
 import RoomNavbar from '../../components/RoomNavbar';
@@ -25,6 +26,7 @@ type Props = {
 
 class Room extends Component {
   componentDidMount() {
+    moment.tz.setDefault("UTC");
     this.props.connectToChannel(this.props.socket, this.props.params.id);
   }
 

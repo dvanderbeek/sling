@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import Avatar from '../Avatar';
 
 type Props = {
@@ -20,7 +20,7 @@ const Message = ({ message: { text, inserted_at, user } }: Props) =>
     <div>
       <div style={{ lineHeight: '1.2' }}>
         <b style={{ marginRight: '8px', fontSize: '14px' }}>{user.username}</b>
-        <time style={{ fontSize: '12px', color: 'rgb(192,192,192)' }}>{moment(inserted_at).format('h:mm A')}</time>
+        <time style={{ fontSize: '12px', color: 'rgb(192,192,192)' }}>{moment(inserted_at).tz(moment.tz.guess()).format('h:mm A')}</time>
       </div>
       <div>{text}</div>
     </div>
