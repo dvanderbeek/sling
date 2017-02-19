@@ -6,7 +6,7 @@ import LoginForm from '../../components/LoginForm';
 import Navbar from '../../components/Navbar';
 
 type Props = {
-  signup: () => void,
+  login: () => void,
 }
 
 class Login extends Component {

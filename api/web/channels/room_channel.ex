@@ -13,7 +13,7 @@ defmodule Sling.RoomChannel do
 
     response = %{
       room: Phoenix.View.render_one(room, Sling.RoomView, "room.json"),
-      messages: Phoneix.View.render_many(page.entries, Sling.MessageView, "message.json"),
+      messages: Phoenix.View.render_many(page.entries, Sling.MessageView, "message.json"),
       pagination: Sling.PaginationHelpers.pagination(page)
     }
 
@@ -38,7 +38,7 @@ defmodule Sling.RoomChannel do
   def terminate(_reason, socket) do
     {:ok, socket}
   end
-  
+
   defp broadcast_message(socket, message) do
     message = Repo.preload(message, :user)
     rendered_message = Phoenix.View.render_one(message, Sling.MessageView, "message.json")
