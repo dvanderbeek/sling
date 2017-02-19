@@ -1,6 +1,8 @@
 defmodule Sling.UserController do
   use Sling.Web, :controller
 
+  plug Guardian.Plug.EnsureAuthenticated, [handler: Sling.SessionController] when action in [:rooms]
+
   alias Sling.User
 
   def create(conn, params) do
@@ -19,5 +21,11 @@ defmodule Sling.UserController do
         |> put_status(:unprocessable_entity)
         |> render(Sling.ChangesetView, "error.json", changeset: changeset)
     end
+  end
+
+  def rooms(conn, _params) do
+    current_user = Guardian.Plug.current_resource(conn)
+    rooms = Repo.all(assoc(current_user, :rooms))
+    render(conn, Sling.RoomView, "index.json", %{rooms: rooms})
   end
 end
