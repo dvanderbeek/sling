@@ -13,14 +13,23 @@ use Mix.Config
 # which you typically run after static files are built.
 config :sling, Sling.Endpoint,
   http: [port: {:system, "PORT"}],
-  url: [host: "example.com", port: 80],
-  cache_static_manifest: "priv/static/manifest.json"
+  url: [scheme: "https", host: "obscure-beyond-26871.herokuapp.com", port: 443], # substitute your app's name
+  cache_static_manifest: "priv/static/manifest.json",
+  secret_key_base: System.get_env("SECRET_KEY_BASE"),
+  check_origin: ["http://sling-chat.s3-website-us-west-2.amazonaws.com"] # substitute you frontend's domain
+
 
 # Do not print debug messages in production
 config :logger, level: :info
 
 config :guardian, Guardian,
   secret_key: System.get_env("GUARDIAN_SECRET_KEY")
+
+config :sling, Sling.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  url: System.get_env("DATABASE_URL"),
+  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
+  ssl: true
 
 # ## SSL Support
 #
@@ -61,4 +70,4 @@ config :guardian, Guardian,
 
 # Finally import the config/prod.secret.exs
 # which should be versioned separately.
-import_config "prod.secret.exs"
+# import_config "prod.secret.exs"
