@@ -16,7 +16,7 @@ config :sling, Sling.Endpoint,
   url: [scheme: "https", host: "obscure-beyond-26871.herokuapp.com", port: 443], # substitute your app's name
   cache_static_manifest: "priv/static/manifest.json",
   secret_key_base: System.get_env("SECRET_KEY_BASE"),
-  check_origin: ["http://sling-chat.s3-website-us-west-2.amazonaws.com"] # substitute you frontend's domain
+  check_origin: ["http://sling-dvdb.s3-website-us-east-1.amazonaws.com/"] # substitute you frontend's domain
 
 
 # Do not print debug messages in production
